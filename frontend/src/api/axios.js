@@ -13,7 +13,7 @@ const api = axios.create({
 // Attach JWT token to every request
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("scrmail_token");
+        const token = localStorage.getItem("MailScrapping_token");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -27,7 +27,7 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            localStorage.removeItem("scrmail_token");
+            localStorage.removeItem("MailScrapping_token");
             window.location.href = "/";
         }
         return Promise.reject(error);

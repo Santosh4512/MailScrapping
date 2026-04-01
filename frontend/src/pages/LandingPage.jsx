@@ -22,7 +22,7 @@ const LandingPage = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
-                    <span className="text-white font-bold text-xl tracking-tight">ScrMail</span>
+                    <span className="text-white font-bold text-xl tracking-tight">MailScrapping</span>
                 </div>
                 <button
                     onClick={handleGoogleLogin}
@@ -51,7 +51,7 @@ const LandingPage = () => {
                     </h1>
 
                     <p className="text-slate-400 text-xl leading-relaxed max-w-xl mx-auto mb-10">
-                        <strong className="text-slate-200">ScrMail</strong> connects to your Gmail account and lets you search
+                        <strong className="text-slate-200">MailScrapping</strong> connects to your Gmail account and lets you search
                         any keyword across your entire inbox — instantly, securely, and without leaving the browser.
                     </p>
 

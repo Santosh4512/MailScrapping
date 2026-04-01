@@ -36,7 +36,7 @@ app.set("trust proxy", 1);
 // Session is needed for Passport
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || "scrmail_session_secret",
+        secret: process.env.SESSION_SECRET || "MailScrapping_session_secret",
         resave: false,
         saveUninitialized: false,
         cookie: {
@@ -57,7 +57,7 @@ app.use("/api/history", historyRoutes);
 
 // Health check
 app.get("/", (req, res) => {
-    res.json({ message: "ScrMail API is running 🚀" });
+    res.json({ message: "MailScrapping API is running 🚀" });
 });
 
 // ─── 404 Handler ──────────────────────────────────────────────
@@ -74,5 +74,5 @@ app.use((err, req, res, next) => {
 // ─── Start Server ─────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`🚀 ScrMail server running on http://localhost:${PORT}`);
+    console.log(`🚀 MailScrapping server running on http://localhost:${PORT}`);
 });

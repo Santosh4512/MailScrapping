@@ -26,7 +26,7 @@ const AuthCallback = () => {
         }
 
         // Save token immediately so AuthContext & axios interceptor can use it
-        localStorage.setItem("scrmail_token", token);
+        localStorage.setItem("MailScrapping_token", token);
 
         // Fetch user with a single retry to handle cold-start delays on Render
         const fetchUser = async (attempt = 1) => {

@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
     // On mount: fetch /me to hydrate auth state
     useEffect(() => {
-        const token = localStorage.getItem("scrmail_token");
+        const token = localStorage.getItem("MailScrapping_token");
         if (!token) {
             setLoading(false);
             return;
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
                 const { data } = await api.get("/api/auth/me");
                 setUser(data);
             } catch {
-                localStorage.removeItem("scrmail_token");
+                localStorage.removeItem("MailScrapping_token");
                 setUser(null);
             } finally {
                 setLoading(false);
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const logout = () => {
-        localStorage.removeItem("scrmail_token");
+        localStorage.removeItem("MailScrapping_token");
         setUser(null);
         window.location.href = "/";
     };

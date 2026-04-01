@@ -25,7 +25,7 @@ const Dashboard = () => {
     // Redirect to landing if not authenticated and no token exists
     useEffect(() => {
         if (!authLoading && !user) {
-            const token = localStorage.getItem("scrmail_token");
+            const token = localStorage.getItem("MailScrapping_token");
             if (!token) {
                 navigate("/", { replace: true });
             }
@@ -138,7 +138,7 @@ const Dashboard = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <h1 className="text-2xl font-bold text-slate-900">ScrMail</h1>
+                        <h1 className="text-2xl font-bold text-slate-900">MailScrapping</h1>
                     </div>
                     <p className="text-slate-500 ml-[52px]">
                         Welcome back, <span className="font-semibold text-slate-700">{user?.name?.split(" ")[0]}</span>! 👋
