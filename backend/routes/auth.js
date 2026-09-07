@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Generate JWT token
 const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    return jwt.sign({ id }, process.env.JWT_SECRET || "mailscrapping-dev-secret", { expiresIn: "7d" });
 };
 
 // @route   GET /api/auth/google
@@ -30,11 +30,11 @@ router.get(
 // @desc    Google OAuth callback
 router.get(
     "/google/callback",
-    passport.authenticate("google", { failureRedirect: `${process.env.CLIENT_URL}?error=auth_failed`, session: false }),
+    passport.authenticate("google", { failureRedirect: `${process.env.CLIENT_URL || "http://localhost:5173"}?error=auth_failed`, session: false }),
     (req, res) => {
         const token = generateToken(req.user._id);
-        // Redirect to frontend with token
-        res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}`);
+        const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+        res.redirect(`${clientUrl}/auth/callback?token=${token}`);
     }
 );
 

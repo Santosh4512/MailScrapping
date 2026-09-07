@@ -6,6 +6,9 @@ const cookieParser = require("cookie-parser");
 const passport = require("./config/passport");
 const connectDB = require("./config/db");
 
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+const SERVER_URL = process.env.SERVER_URL || "http://localhost:5000";
+
 // Routes
 const authRoutes = require("./routes/auth");
 const gmailRoutes = require("./routes/gmail");
@@ -19,7 +22,7 @@ const app = express();
 // ─── Middleware ───────────────────────────────────────────────
 app.use(
     cors({
-        origin: process.env.CLIENT_URL || "http://localhost:5173",
+        origin: CLIENT_URL,
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
@@ -40,10 +43,12 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            secure: process.env.NODE_ENV === "production", // must be true on Render
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // needed for cross-origin cookies in prod
-            maxAge: 24 * 60 * 60 * 1000
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 24 * 60 * 60 * 1000,
+            httpOnly: true,
         },
+        name: "mailscrapping.sid",
     })
 );
 

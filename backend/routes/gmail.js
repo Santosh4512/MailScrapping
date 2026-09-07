@@ -66,6 +66,9 @@ router.get("/search", protect, async (req, res) => {
         const auth = getGmailClient(req.user);
         const gmail = google.gmail({ version: "v1", auth });
 
+        // Ensure a valid subject is used for reply requests.
+        const safeSubject = (req.body?.subject || "No Subject").toString();
+
         // Step 1: Search for message IDs matching the keyword (if any)
         const listParams = { userId: "me", maxResults: 20 };
         if (keyword.trim() !== "") {
@@ -139,8 +142,8 @@ router.post("/reply/:id", protect, async (req, res) => {
         const auth = getGmailClient(req.user);
         const gmail = google.gmail({ version: "v1", auth });
 
-        // Ensure subject starts with "Re: "
-        const replySubject = subject.toLowerCase().startsWith("re:") ? subject : `Re: ${subject}`;
+        const safeSubject = (subject || "No Subject").toString();
+        const replySubject = safeSubject.toLowerCase().startsWith("re:") ? safeSubject : `Re: ${safeSubject}`;
         const utf8Subject = `=?utf-8?B?${Buffer.from(replySubject).toString("base64")}?=`;
 
         // Proper thread references
