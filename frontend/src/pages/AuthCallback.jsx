@@ -20,6 +20,7 @@ const AuthCallback = () => {
         const error = params.get("error");
 
         if (error || !token) {
+            console.log("AuthCallback: missing token or error", { token, error });
             setErrorMsg("Google sign-in was cancelled or failed. Redirecting…");
             setTimeout(() => navigate("/", { replace: true }), 2500);
             return;
@@ -27,14 +28,24 @@ const AuthCallback = () => {
 
         // Save token immediately so AuthContext & axios interceptor can use it
         localStorage.setItem("MailScrapping_token", token);
+        console.log("AuthCallback: token saved to localStorage", {
+            tokenPreview: token?.slice?.(0, 20) + (token?.length > 20 ? "..." : ""),
+            stored: localStorage.getItem("MailScrapping_token") ? true : false,
+        });
 
         // Fetch user with a single retry to handle cold-start delays on Render
         const fetchUser = async (attempt = 1) => {
             try {
                 const { data } = await api.get("/api/auth/me");
+                console.log("AuthCallback: fetched user", data);
                 setUser(data);
                 navigate("/dashboard", { replace: true });
             } catch (err) {
+                console.error("AuthCallback: fetchUser error", {
+                    attempt,
+                    status: err.response?.status,
+                    message: err.message,
+                });
                 if (attempt < 3) {
                     // Wait 1.5s then retry (handles Render cold-start 502)
                     setTimeout(() => fetchUser(attempt + 1), 1500);
